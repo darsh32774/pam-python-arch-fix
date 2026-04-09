@@ -35,3 +35,7 @@ With these changes, the package builds successfully and allows Howdy to be insta
 
 To apply the fix, replace the original PKGBUILD in the pam-python AUR package with the modified version provided in this repository, then build using:
 `makepkg -si`
+
+## Changes (Diff)
+
+See `changes.diff` for a full list of modifications.
