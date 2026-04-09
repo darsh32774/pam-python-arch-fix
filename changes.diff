@@ -1,0 +1,26 @@
+--- PKGBUILD.original	2026-04-09 18:22:51.224512147 +0530
++++ PKGBUILD	2026-04-09 18:22:43.366730064 +0530
+@@ -24,11 +24,17 @@
+ prepare() {
+   cd "${srcdir}/${pkgname}-${pkgver}"
+   sed -i'' 's|LIBDIR ?= /lib/security|LIBDIR ?= /usr/lib/security|g' src/Makefile
+-  sed -n '/^License/,/^--$/p' README.txt | grep -v -e '^License' -e '^-\+' > LICENSE
++  sed -i 's/-Werror//g' src/Makefile
++  sed -i 's/-Werror=format-security//g' src/Makefile
+ }
+ 
+ build() {
+   cd "${srcdir}/${pkgname}-${pkgver}"
++
++  export CFLAGS="-D_GNU_SOURCE -Wno-error"
++  export CXXFLAGS="-D_GNU_SOURCE -Wno-error"
++  export CPPFLAGS="-D_GNU_SOURCE"
++
+   PREFIX=/usr make
+ }
+ 
+@@ -37,3 +43,4 @@
+   PREFIX=/usr make DESTDIR="${pkgdir}" install
+   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+ }
++
